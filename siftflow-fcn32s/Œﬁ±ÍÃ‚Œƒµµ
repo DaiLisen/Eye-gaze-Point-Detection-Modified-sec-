@@ -1,0 +1,53 @@
+layer {
+	bottom: "conv5_3"
+	top: "weight"
+	name: "weight"
+	param {
+		lr_mult: 1
+	}
+	param {
+		lr_mult: 2
+	}
+	type: "InnerProduct"
+	inner_product_param {
+		num_output: 2
+		weight_filler {
+			type: "gaussian"
+			std: 0.001
+		}
+		bias_filler {
+			type: "constant"
+			value: 0
+		}
+	}
+}
+layer {
+  name: "slice"
+  type: "Slice"
+  bottom: "weight"
+  top: "weight_w"
+  top: "weight_b"
+  slice_param {
+    axis: 1
+  }
+}
+layer {
+  name: "scale_w"
+  type: "Scale"
+  bottom: "rare1"
+  bottom: "weight_w"
+  top: "scale_w"
+  scale_param{
+  axis: 0
+  }
+}
+layer {
+  name: "bias_b"
+  type: "Bias"
+  bottom: "scale_w"
+  bottom: "weight_b"
+  top: "rare2"
+  bias_param{
+  axis: 0
+  }
+}
