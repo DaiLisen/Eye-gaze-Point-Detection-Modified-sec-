@@ -1,0 +1,20 @@
+train_net: "ResNet-50-trainval.prototxt"
+test_net: "ResNet-50-test.prototxt"
+test_iter: 25
+# make test net, but don't invoke it from the solver itself
+test_interval: 1
+display: 20
+average_loss: 20
+lr_policy: "fixed"
+# lr for unnormalized softmax
+base_lr: 1e-13
+#base_lr: 1e-7
+# high momentum
+momentum: 0.99
+# no gradient accumulation
+iter_size: 20
+max_iter: 300000
+weight_decay: 0.0005
+test_initialization: false
+snapshot: 475
+snapshot_prefix: "output"
